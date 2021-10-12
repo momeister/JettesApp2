@@ -7,23 +7,35 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_Option extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener{
+public class Activity_Option extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener , Dialog.ExampleDialogListener{
 
-    Button but_fragen, but_aufgaben, but_zuruek;
-    MyRecyclerViewAdapter adapter;
+    Button but_fragen, but_aufgaben, but_zuruek, but_hinzufuegen;
     protected List<String> neueFragen;
+
+    @Override
+    public void applyTexts(String eingabe) {
+        neueFragen.add(eingabe);
+        //neueFragen();
+        einschreiben(this, eingabe);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +45,18 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         but_fragen = findViewById(R.id.button_fragen);
         but_aufgaben = findViewById(R.id.button_aufgaben);
         but_zuruek = findViewById(R.id.button_zurueck);
+        but_hinzufuegen = findViewById(R.id.button_hinzufuegen);
 
         neueFragen = new ArrayList<String>();
-        neueFragen();
+        //neueFragen(this);
 
-        replaceFragment(new fragment_fragen());
+        replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen));
 
         but_fragen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                replaceFragment(new fragment_fragen());
+                replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen));
 
             }
         });
@@ -64,12 +77,12 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_fragen);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, neueFragen);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
-
+        but_hinzufuegen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -91,9 +104,25 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
 
     }
 
-    private void neueFragen(){
+    private void neueFragen(Context context){
+        String filename = "TexteFragen.txt";
         String tada = "";
 
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(context.openFileInput(filename)));
+            while ((tada = br.readLine()) != null){
+                neueFragen.add(tada);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        //Funktioniert aber im Asset Ordner
+/*
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(getResources().getAssets().open("NeueFragen.txt", AssetManager.ACCESS_STREAMING)));
             while ((tada = br.readLine()) != null){
@@ -103,5 +132,28 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         }catch (IOException e){
             e.printStackTrace();
         }
+
+ */
+    }
+
+    public void openDialog(){
+        Dialog exampleDialog = new Dialog();
+        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+    }
+
+    public void einschreiben(Context context, String eingabe){
+        String filename = "TexteFragen.txt";
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = context.openFileOutput(filename, context.MODE_PRIVATE);
+            outputStream.write(eingabe.getBytes());
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

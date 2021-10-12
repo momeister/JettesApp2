@@ -18,8 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -28,7 +30,17 @@ import java.util.List;
 public class fragment_fragen extends Fragment{
 
     View view;
+    RandomNumListAdapter adapter;
+
     protected List<String> neueFragen;
+    private MyRecyclerViewAdapter myRecyclerViewAdapter;
+
+    //Code aus Internet
+    private RecyclerView recyclerView;
+
+    public fragment_fragen(List<String> neueFragen){
+        this.neueFragen = neueFragen;
+    }
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container,
@@ -37,22 +49,40 @@ public class fragment_fragen extends Fragment{
 
         neueFragen = new ArrayList<String>();
         neueFragen();
-
         view = inflater.inflate(R.layout.fragment_fragen, container, false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_fragen);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //Hier Code aus Internet hinzugefügt
+        try {
+            recyclerView = view.findViewById(R.id.recyclerView_fragen);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            adapter = new RandomNumListAdapter(neueFragen);
+            recyclerView.setAdapter(adapter);
+        }catch (Exception e){
 
-        MyRecyclerViewAdapter mAdapter = new MyRecyclerViewAdapter(this.getContext(), neueFragen);
+        }
 
-        recyclerView.setAdapter(mAdapter);
-
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return view;
     }
 
     private void neueFragen() {
+
+        String filename = "TexteFragen.txt";
+        String tada = "";
+
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(getContext().openFileInput(filename)));
+            while ((tada = br.readLine()) != null){
+                neueFragen.add(tada);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    /*    Alte (Im Asset Ordner funktionierende) Version
         String tada = "";
 
         try {
@@ -64,6 +94,8 @@ public class fragment_fragen extends Fragment{
         }catch (IOException e){
             e.printStackTrace();
         }
+
+     */
     }
 
 }

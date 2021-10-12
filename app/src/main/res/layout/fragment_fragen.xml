@@ -9,9 +9,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_fragen"
-        android:layout_width="230dp"
-        android:layout_height="443dp"
+        android:layout_width="397dp"
+        android:layout_height="715dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="104dp" />
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="2dp" />
 </RelativeLayout>

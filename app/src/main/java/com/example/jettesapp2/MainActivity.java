@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private SwipeDeck cardStack;
     private ArrayList<CourseModal> courseModalArrayList;
     public String Test;
-    public String Teil1;
     public List<String> Fragen;
     public List<String> Aufgaben;
 

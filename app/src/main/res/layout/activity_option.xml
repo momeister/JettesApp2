@@ -8,36 +8,19 @@
 
 
     <Button
-        android:id="@+id/button_fragen"
-        android:layout_width="177dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="36dp"
-        android:text="Fragen"
-        app:layout_constraintBottom_toTopOf="@+id/button_zurueck"
-        app:layout_constraintEnd_toStartOf="@+id/button_aufgaben"
-        app:layout_constraintHorizontal_bias="0.363"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button_aufgaben"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
         android:id="@+id/button_aufgaben"
         android:layout_width="186dp"
         android:layout_height="40dp"
-        android:layout_marginTop="591dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="8dp"
         android:text="Aufgaben"
-        app:layout_constraintBottom_toTopOf="@+id/button_zurueck"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintBottom_toTopOf="@+id/button_hinzufuegen"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/button_zurueck"
         android:layout_width="416dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Zurück"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +33,28 @@
         android:layout_height="550dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button_hinzufuegen"
+        android:layout_width="414dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="8dp"
+        android:text="Hinufügen"
+        app:layout_constraintBottom_toTopOf="@+id/button_zurueck"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_fragen"
+        android:layout_width="177dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:text="Fragen"
+        app:layout_constraintBottom_toTopOf="@+id/button_hinzufuegen"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

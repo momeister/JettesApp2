@@ -51,19 +51,24 @@ public class MainRecyclerFragen extends AppCompatActivity implements MyRecyclerV
         });
 
         // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvAnimalss);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, neueFragen);
-        adapter.setClickListener(this);
-        recyclerView.setAdapter(adapter);
 
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Snackbar.make(view, "Here ist a Snakebar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
+        try {
+            RecyclerView recyclerView = findViewById(R.id.rvAnimalss);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new MyRecyclerViewAdapter(this, neueFragen);
+            adapter.setClickListener(this);
+            recyclerView.setAdapter(adapter);
+
+            FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+            fab.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    Snackbar.make(view, "Here ist a Snakebar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+            });
+        } catch (Exception e){
+        }
+
         
     }
 
