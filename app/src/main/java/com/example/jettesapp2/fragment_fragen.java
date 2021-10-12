@@ -22,12 +22,13 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class fragment_fragen extends Fragment{
+public class fragment_fragen extends Fragment {
 
     View view;
     RandomNumListAdapter adapter;
@@ -47,7 +48,7 @@ public class fragment_fragen extends Fragment{
                               Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        neueFragen = new ArrayList<String>();
+        //neueFragen = new ArrayList<String>();
         neueFragen();
         view = inflater.inflate(R.layout.fragment_fragen, container, false);
 
@@ -66,8 +67,8 @@ public class fragment_fragen extends Fragment{
         return view;
     }
 
+    //Gibt Inhalt Textdatei aus
     private void neueFragen() {
-
         String filename = "TexteFragen.txt";
         String tada = "";
 
@@ -94,8 +95,25 @@ public class fragment_fragen extends Fragment{
         }catch (IOException e){
             e.printStackTrace();
         }
+    */
 
-     */
     }
+    //soll aus Dialog Inhalt in Textdatei einspeichern
+    //!!!!! Funktioniert noch nicht !!!!!!!
+    //Wahrscheinlicher Grund : Inhalt Textdatei wird überspeichert -> nicht in neue Zeile geschrieben
+    public void einschreiben(String eingabe){
+        String filename = "TexteFragen.txt";
+        FileOutputStream outputStream;
 
+        try {
+            outputStream = getContext().openFileOutput(filename,getContext().MODE_PRIVATE);
+            outputStream.write(eingabe.getBytes());
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

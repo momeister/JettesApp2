@@ -16,9 +16,11 @@ import android.widget.Button;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,12 +31,15 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
 
     Button but_fragen, but_aufgaben, but_zuruek, but_hinzufuegen;
     protected List<String> neueFragen;
+    private fragment_fragen fragmentFragen;
 
     @Override
     public void applyTexts(String eingabe) {
         neueFragen.add(eingabe);
-        //neueFragen();
-        einschreiben(this, eingabe);
+        //einschreiben(this, eingabe);
+        //neueFragen(this);
+        fragmentFragen.einschreiben(eingabe);
+
     }
 
     @Override
@@ -48,9 +53,8 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         but_hinzufuegen = findViewById(R.id.button_hinzufuegen);
 
         neueFragen = new ArrayList<String>();
-        //neueFragen(this);
 
-        replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen));
+        replaceFragment(fragmentFragen = new fragment_fragen((ArrayList<String>) neueFragen));
 
         but_fragen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +145,10 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
+
+    //soll aus Dialog Inhalt in Textdatei einspeichern
+    //!!!!! Funktioniert noch nicht !!!!!!!
+    //Wahrscheinlicher Grund : Inhalt Textdatei wird überspeichert -> nicht in neue Zeile geschrieben
     public void einschreiben(Context context, String eingabe){
         String filename = "TexteFragen.txt";
         FileOutputStream outputStream;
@@ -154,6 +162,17 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+/*
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+ */
 
     }
 }
