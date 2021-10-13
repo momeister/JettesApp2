@@ -38,7 +38,11 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         neueFragen.add(eingabe);
         //einschreiben(this, eingabe);
         //neueFragen(this);
-        fragmentFragen.einschreiben(eingabe);
+        try {
+            einschreiben2(this, eingabe);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -54,7 +58,8 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
 
         neueFragen = new ArrayList<String>();
 
-        replaceFragment(fragmentFragen = new fragment_fragen((ArrayList<String>) neueFragen));
+        replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen));
+        //replaceFragment(fragmentFragen = new fragment_fragen((ArrayList<String>) neueFragen));
 
         but_fragen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,4 +180,22 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
  */
 
     }
+
+    public void einschreiben2(Context context, String eingabe) throws IOException {
+        String filename = "TexteFragen.txt";
+
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(filename));
+            bufferedWriter.write(eingabe);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(bufferedWriter != null){
+                bufferedWriter.close();
+            }
+        }
+
+    }
+
 }
