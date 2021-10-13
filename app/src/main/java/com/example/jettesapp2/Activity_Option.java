@@ -1,5 +1,6 @@
 package com.example.jettesapp2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -9,14 +10,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Activity_Option extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener , Dialog.ExampleDialogListener{
 
@@ -33,16 +39,17 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
     protected List<String> neueFragen;
     private fragment_fragen fragmentFragen;
 
+    ArrayList<File> dateinliste;
+    ArrayList<String> texteliste;
+
+    SharedPreferences sharedPreferences;
+
     @Override
     public void applyTexts(String eingabe) {
         neueFragen.add(eingabe);
         //einschreiben(this, eingabe);
         //neueFragen(this);
-        try {
-            einschreiben2(this, eingabe);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        einschreiben(this, eingabe);
 
     }
 
@@ -167,8 +174,6 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 /*
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true));
@@ -176,9 +181,73 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         } catch (IOException e) {
             e.printStackTrace();
         }
-
  */
+    }
 
+    public void einschreiben3(String eingabe){
+        sharedPreferences = new SharedPreferences() {
+            @Override
+            public Map<String, ?> getAll() {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public String getString(String s, @Nullable String s1) {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public Set<String> getStringSet(String s, @Nullable Set<String> set) {
+                return null;
+            }
+
+            @Override
+            public int getInt(String s, int i) {
+                return 0;
+            }
+
+            @Override
+            public long getLong(String s, long l) {
+                return 0;
+            }
+
+            @Override
+            public float getFloat(String s, float v) {
+                return 0;
+            }
+
+            @Override
+            public boolean getBoolean(String s, boolean b) {
+                return false;
+            }
+
+            @Override
+            public boolean contains(String s) {
+                return false;
+            }
+
+            @Override
+            public Editor edit() {
+                return null;
+            }
+
+            @Override
+            public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener onSharedPreferenceChangeListener) {
+
+            }
+
+            @Override
+            public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener onSharedPreferenceChangeListener) {
+
+            }
+        };
+
+        sharedPreferences = getSharedPreferences(eingabe,0);
+        SharedPreferences.Editor myEditor = sharedPreferences.edit();
+        myEditor.putString("Name","Andreas");
+        myEditor.apply();
     }
 
     public void einschreiben2(Context context, String eingabe) throws IOException {
@@ -195,6 +264,14 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
                 bufferedWriter.close();
             }
         }
+
+    }
+
+    public void Textdateien_Erstellen(){
+        dateinliste = new ArrayList<File>();
+        texteliste = new ArrayList<String>();
+
+        //File ordner = new File(Environment.)
 
     }
 
