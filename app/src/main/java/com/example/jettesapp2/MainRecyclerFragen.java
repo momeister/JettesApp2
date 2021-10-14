@@ -9,6 +9,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,83 +23,58 @@ import java.util.List;
 
 public class MainRecyclerFragen extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
-    MyRecyclerViewAdapter adapter;
     protected List<String> neueFragen;
+
+    EditText editText;
+    Button btAdd, btAufgaben;
+    RecyclerView recyclerView;
+
+    List<MainData> dataList = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager;
+    RoomDB database;
+    MainAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recycler);
 
-        // data to populate the RecyclerView with
-        neueFragen = new ArrayList<String>();
-        neueFragen();
+        editText = findViewById(R.id.edit_text);
+        btAdd = findViewById(R.id.bt_add);
+        btAufgaben = findViewById(R.id.bt_aufgaben);
+        recyclerView = findViewById(R.id.recycler_view);
 
-        final Button button_zur = findViewById(R.id.button_zur);
-        button_zur.setOnClickListener(new View.OnClickListener() {
+        database = RoomDB.getInstance(this);
+        dataList = database.mainDao().getAll();
+
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new MainAdapter(MainRecyclerFragen.this,dataList);
+        recyclerView.setAdapter(adapter);
+
+        btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity1();
-            }
-        });
+                String sText = editText.getText().toString().trim();
 
-        final Button button_zu_aufg = findViewById(R.id.button_zu_aufgaben);
-        button_zu_aufg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityRecyclerAufgaben();
-            }
-        });
+                if(!sText.equals("")){
+                    MainData data = new MainData();
+                    data.setText(sText);
+                    database.mainDao().insert(data);
+                    editText.setText("");
 
-        // set up the RecyclerView
-
-        try {
-            RecyclerView recyclerView = findViewById(R.id.rvAnimalss);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            adapter = new MyRecyclerViewAdapter(this, neueFragen);
-            adapter.setClickListener(this);
-            recyclerView.setAdapter(adapter);
-
-            FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-            fab.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    Snackbar.make(view, "Here ist a Snakebar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    dataList.clear();
+                    dataList.addAll(database.mainDao().getAll());
+                    adapter.notifyDataSetChanged();
                 }
-            });
-        } catch (Exception e){
-        }
+            }
+        });
 
-        
+
     }
-
-    private void openActivityRecyclerAufgaben() {
-        Intent intent = new Intent(this, MainRecyclerAufgabenn.class);
-        startActivity(intent);
-    }
-
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
-    }
 
-    private void neueFragen(){
-        String tada = "";
-
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(getResources().getAssets().open("NeueFragen.txt", AssetManager.ACCESS_STREAMING)));
-            while ((tada = br.readLine()) != null){
-                neueFragen.add(tada);
-            }
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void openActivity1(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 }

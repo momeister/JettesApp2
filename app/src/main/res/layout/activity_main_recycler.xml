@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/edit_text"
-        android:hint="Geben sie einen Text ein"
+        android:hint="Geben Sie eine Frage ein!"
         android:padding="12dp"
         android:background="@android:drawable/editbox_background"/>
 
