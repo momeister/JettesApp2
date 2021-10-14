@@ -5,28 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +28,7 @@ import java.util.Set;
 
 public class Activity_Option extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener , Dialog.ExampleDialogListener{
 
-    Button but_fragen, but_aufgaben, but_zuruek, but_hinzufuegen;
+    Button but_fragen, but_aufgaben, but_zuruek, but_hinzufuegen, btAdd;
     protected List<String> neueFragen;
     private fragment_fragen fragmentFragen;
 
@@ -61,7 +54,7 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         but_fragen = findViewById(R.id.button_fragen);
         but_aufgaben = findViewById(R.id.button_aufgaben);
         but_zuruek = findViewById(R.id.button_zurueck);
-        but_hinzufuegen = findViewById(R.id.button_hinzufuegen);
+        but_hinzufuegen = findViewById(R.id.button_hinzu);
 
         neueFragen = new ArrayList<String>();
 
@@ -97,6 +90,14 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
             @Override
             public void onClick(View view) {
                 openDialog();
+            }
+        });
+
+        btAdd = findViewById(R.id.button_hinzu);
+        btAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //String sText = fragment_fragen.editText
             }
         });
     }

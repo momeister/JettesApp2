@@ -3,6 +3,7 @@ package com.example.jettesapp2;
 import static android.content.Context.APPWIDGET_SERVICE;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -31,10 +32,16 @@ import java.util.List;
 public class fragment_fragen extends Fragment {
 
     View view;
-    RandomNumListAdapter adapter;
+    RandomNumListAdapter adapter1;
 
     protected List<String> neueFragen;
     private MyRecyclerViewAdapter myRecyclerViewAdapter;
+
+    //Mit Jatpack der Versuch
+    List<MainData> dataList = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager;
+    RoomDB database;
+    MainAdapter adapter;
 
     //Code aus Internet
     private RecyclerView recyclerView;
@@ -55,10 +62,31 @@ public class fragment_fragen extends Fragment {
         //Hier Code aus Internet hinzugefügt
         try {
             recyclerView = view.findViewById(R.id.recyclerView_fragen);
+            /*
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            adapter = new RandomNumListAdapter(neueFragen);
+            adapter1 = new RandomNumListAdapter(neueFragen);
+            recyclerView.setAdapter(adapter1);
+
+             */
+
+
+
+            database = RoomDB.getInstance(getContext());
+            dataList = database.mainDao().getAll();
+
+            linearLayoutManager = new LinearLayoutManager(getContext());
+
+            recyclerView.setLayoutManager(linearLayoutManager);
+
+            //Hier wird wahrscheinlich etwas nicht klappen
+            adapter = new MainAdapter((Activity) getContext(), dataList);
+
             recyclerView.setAdapter(adapter);
+
+
+
+
         }catch (Exception e){
 
         }
