@@ -1,72 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity_Option">
+    android:windowActionBar="false"
+    tools:context=".Activity_Option"
+    android:orientation="vertical">
+
+    <EditText
+
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:hint="Geben Sie eine Frage ein!"
+        android:padding="12dp"
+       />
 
 
     <Button
-        android:id="@+id/button_aufgaben"
-        android:layout_width="186dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:text="Aufgaben"
-        app:layout_constraintBottom_toTopOf="@+id/button_hinzu"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button_zurueck"
-        android:layout_width="416dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
-        android:text="Zurück"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/button_hinzu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hinzufügen"
+        tools:ignore="MissingConstraints" />
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        android:layout_height="524dp"
+        android:layout_marginBottom="10dp">
 
     </FrameLayout>
 
-    <Button
-        android:id="@+id/button_hinzu"
-        android:layout_width="127dp"
-        android:layout_height="39dp"
-        android:layout_marginBottom="8dp"
-        android:text="Hinzufügen"
-        app:layout_constraintBottom_toTopOf="@+id/button_zurueck"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_fragen"
-        android:layout_width="177dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:text="Fragen"
-        app:layout_constraintBottom_toTopOf="@+id/button_hinzu"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/bt_add"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="38dp"
-        android:text="ADD"
-        app:layout_constraintEnd_toStartOf="@+id/button_hinzu"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_fragen" />
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/button_fragen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Fragen" />
+
+        <Button
+            android:id="@+id/button_aufgaben"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Aufgaben" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+
+
+
+

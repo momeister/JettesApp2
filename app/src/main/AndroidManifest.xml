@@ -16,9 +16,6 @@
             android:name=".MainRecyclerFragen"
             android:exported="true" />
         <activity
-            android:name=".FrageHinzu"
-            android:exported="true" />
-        <activity
             android:name=".Activity2"
             android:exported="true" />
         <activity

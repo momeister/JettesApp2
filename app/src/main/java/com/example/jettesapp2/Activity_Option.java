@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -28,7 +32,15 @@ import java.util.Set;
 
 public class Activity_Option extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener , Dialog.ExampleDialogListener{
 
-    Button but_fragen, but_aufgaben, but_zuruek, but_hinzufuegen, btAdd;
+    Button but_fragen, but_aufgaben, but_hinzufuegen;
+    EditText editText;
+
+    RoomDB database;
+    MainAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
+    List<MainData> dataList = new ArrayList<>();
+
+
     protected List<String> neueFragen;
     private fragment_fragen fragmentFragen;
 
@@ -53,8 +65,11 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
 
         but_fragen = findViewById(R.id.button_fragen);
         but_aufgaben = findViewById(R.id.button_aufgaben);
-        but_zuruek = findViewById(R.id.button_zurueck);
         but_hinzufuegen = findViewById(R.id.button_hinzu);
+        editText = findViewById(R.id.edit_text);
+
+        database = RoomDB.getInstance(this);
+        dataList = database.mainDao().getAll();
 
         neueFragen = new ArrayList<String>();
 
@@ -79,13 +94,6 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
             }
         });
 
-        but_zuruek.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivity1();
-            }
-        });
-
         but_hinzufuegen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,11 +101,21 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
             }
         });
 
-        btAdd = findViewById(R.id.button_hinzu);
-        btAdd.setOnClickListener(new View.OnClickListener() {
+        but_hinzufuegen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //String sText = fragment_fragen.editText
+                String sText = editText.getText().toString().trim();
+
+                if(!sText.equals("")){
+                    MainData data = new MainData();
+                    data.setText(sText);
+                    database.mainDao().insert(data);
+                    editText.setText("");
+
+                    dataList.clear();
+                    dataList.addAll(database.mainDao().getAll());
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -154,8 +172,24 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
     }
 
     public void openDialog(){
-        Dialog exampleDialog = new Dialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+        //Heute
+
+        android.app.Dialog dialog = new android.app.Dialog(this);
+        dialog.setContentView(R.layout.dialog_update);
+
+        int width = WindowManager.LayoutParams.MATCH_PARENT;
+        int height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setLayout(width,height);
+
+        dialog.show();
+
+        EditText editText = dialog.findViewById(R.id.edit_text);
+        Button btUpdate = dialog.findViewById(R.id.bt_update);
+
+
+        //Damals
+       // Dialog exampleDialog = new Dialog();
+       // exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
 
@@ -185,72 +219,6 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
  */
     }
 
-    public void einschreiben3(String eingabe){
-        sharedPreferences = new SharedPreferences() {
-            @Override
-            public Map<String, ?> getAll() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public String getString(String s, @Nullable String s1) {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Set<String> getStringSet(String s, @Nullable Set<String> set) {
-                return null;
-            }
-
-            @Override
-            public int getInt(String s, int i) {
-                return 0;
-            }
-
-            @Override
-            public long getLong(String s, long l) {
-                return 0;
-            }
-
-            @Override
-            public float getFloat(String s, float v) {
-                return 0;
-            }
-
-            @Override
-            public boolean getBoolean(String s, boolean b) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(String s) {
-                return false;
-            }
-
-            @Override
-            public Editor edit() {
-                return null;
-            }
-
-            @Override
-            public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener onSharedPreferenceChangeListener) {
-
-            }
-
-            @Override
-            public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener onSharedPreferenceChangeListener) {
-
-            }
-        };
-
-        sharedPreferences = getSharedPreferences(eingabe,0);
-        SharedPreferences.Editor myEditor = sharedPreferences.edit();
-        myEditor.putString("Name","Andreas");
-        myEditor.apply();
-    }
-
     public void einschreiben2(Context context, String eingabe) throws IOException {
         String filename = "TexteFragen.txt";
 
@@ -265,14 +233,6 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
                 bufferedWriter.close();
             }
         }
-
-    }
-
-    public void Textdateien_Erstellen(){
-        dateinliste = new ArrayList<File>();
-        texteliste = new ArrayList<String>();
-
-        //File ordner = new File(Environment.)
 
     }
 
