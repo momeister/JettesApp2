@@ -1,53 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <Button
-        android:id="@+id/button_zur"
-        android:layout_width="290dp"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginBottom="13dp"
-        android:text="Zurück zum Spiel" />
+        android:id="@+id/edit_text"
+        android:hint="Geben sie einen Text ein"
+        android:padding="12dp"
+        android:background="@android:drawable/editbox_background"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp" >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/bt_add"
+            android:text="Hinzufügen"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/bt_aufgaben"
+            android:text="Aufgaben"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAnimalss"
         android:layout_width="match_parent"
-        android:layout_height="550dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/list_row_main"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="11dp"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <Button
-        android:id="@+id/button_zu_fragen"
-        android:layout_width="161dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="82dp"
-        android:text="Fragen" />
-
-    <Button
-        android:id="@+id/button_zu_aufgaben"
-        android:layout_width="161dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="220dp"
-        android:layout_marginBottom="81dp"
-        android:text="Aufgaben" />
-</RelativeLayout>
+</LinearLayout>
