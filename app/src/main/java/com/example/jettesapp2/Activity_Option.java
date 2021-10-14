@@ -71,16 +71,22 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         database = RoomDB.getInstance(this);
         dataList = database.mainDao().getAll();
 
+
+        //EXPERIMENTELLER BEREICH
+        linearLayoutManager = new LinearLayoutManager(this);
+        adapter = new MainAdapter(Activity_Option.this, dataList);
+        //EXPERIMENTELLER BEREICH
+
         neueFragen = new ArrayList<String>();
 
-        replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen));
+        replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
         //replaceFragment(fragmentFragen = new fragment_fragen((ArrayList<String>) neueFragen));
 
         but_fragen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen));
+                replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
 
             }
         });

@@ -46,8 +46,10 @@ public class fragment_fragen extends Fragment {
     //Code aus Internet
     private RecyclerView recyclerView;
 
-    public fragment_fragen(List<String> neueFragen){
+    public fragment_fragen(List<String> neueFragen, LinearLayoutManager linearLayoutManager, MainAdapter adapter){
         this.neueFragen = neueFragen;
+        this.linearLayoutManager = linearLayoutManager;
+        this.adapter = adapter;
     }
 
     @Override
@@ -72,20 +74,11 @@ public class fragment_fragen extends Fragment {
 
 
 
-            database = RoomDB.getInstance(getContext());
-            dataList = database.mainDao().getAll();
-
-            linearLayoutManager = new LinearLayoutManager(getContext());
+            //database = RoomDB.getInstance(getContext());
+            //dataList = database.mainDao().getAll();
 
             recyclerView.setLayoutManager(linearLayoutManager);
-
-            //Hier wird wahrscheinlich etwas nicht klappen
-            adapter = new MainAdapter((Activity) getContext(), dataList);
-
             recyclerView.setAdapter(adapter);
-
-
-
 
         }catch (Exception e){
 
