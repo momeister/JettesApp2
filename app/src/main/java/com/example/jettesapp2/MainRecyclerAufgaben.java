@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,80 +23,73 @@ import java.util.List;
 
 public class MainRecyclerAufgaben extends AppCompatActivity implements MyRecyclerViewAdapterAufgaben.ItemClickListener {
 
-    MyRecyclerViewAdapterAufgaben adapter;
     protected List<String> neueAufgabe;
+
+    EditText editText;
+
+    Button btAdd, btFragen;
+    RecyclerView recyclerView;
+
+    List<MainData> dataList = new ArrayList<>();
+    LinearLayoutManager linearLayoutManager;
+    RoomDB database;
+    MainAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_recycle_aufgabe);
 
-        // data to populate the RecyclerView with
-        neueAufgabe = new ArrayList<String>();
-        neueAufgabe();
+        editText = findViewById(R.id.edit_text);
+        btAdd = findViewById(R.id.bt_add);
+        btFragen = findViewById(R.id.bt_fragen);
+        recyclerView = findViewById(R.id.recycler_view);
 
-        final Button button_zur = findViewById(R.id.button_zur);
-        button_zur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivity1();
-            }
-        });
+        /*
+        database = RoomDB.getInstance(this);
+        dataList = database.mainDao().getAll();
 
-        final Button button_zu_aufg = findViewById(R.id.button_zu_aufgaben);
-        button_zu_aufg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityRecyclerAufgaben();
-            }
-        });
-
-        // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvAnimalss);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapterAufgaben(this, neueAufgabe);
-        adapter.setClickListener(this);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new MainAdapter(MainRecyclerAufgaben.this,dataList);
         recyclerView.setAdapter(adapter);
-/*
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener(){
+
+        btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                Snackbar.make(view, "Here ist a Snakebar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            public void onClick(View view) {
+                String sText = editText.getText().toString().trim();
+
+                if(!sText.equals("")){
+                    MainData data = new MainData();
+                    data.setText(sText);
+                    database.mainDao().insert(data);
+                    editText.setText("");
+
+                    dataList.clear();
+                    dataList.addAll(database.mainDao().getAll());
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
- */
-        
-    }
+        btFragen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityFragen();
+            }
+        });
 
-    private void openActivityRecyclerAufgaben() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+         */
 
+    }
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + adapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+
     }
 
-    private void neueAufgabe(){
-        String tada = "";
-
-        try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(getResources().getAssets().open("NeueAufgabe.txt", AssetManager.ACCESS_STREAMING)));
-            while ((tada = br.readLine()) != null){
-                neueAufgabe.add(tada);
-            }
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void openActivity1(){
-        Intent intent = new Intent(this, MainActivity.class);
+    public void ActivityFragen(){
+        Intent intent = new Intent(this, MainRecyclerFragen.class);
         startActivity(intent);
     }
 }

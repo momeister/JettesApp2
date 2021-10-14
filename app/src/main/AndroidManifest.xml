@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JettesApp2">
         <activity
-            android:name=".MainRecyclerAufgabenn"
-            android:exported="true" />
-        <activity
             android:name=".Activity_Option"
             android:exported="true" />
         <activity

@@ -70,11 +70,22 @@ public class MainRecyclerFragen extends AppCompatActivity implements MyRecyclerV
             }
         });
 
+        btAufgaben.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityAufgaben();
+            }
+        });
 
     }
 
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    public void ActivityAufgaben(){
+        Intent intent = new Intent(this, MainRecyclerAufgaben.class);
+        startActivity(intent);
     }
 }

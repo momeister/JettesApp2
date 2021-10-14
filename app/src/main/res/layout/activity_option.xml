@@ -68,15 +68,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_fragen" />
 
-    <Button
-        android:id="@+id/bt_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="3dp"
-        android:text="RESET"
-        app:layout_constraintStart_toEndOf="@+id/button_hinzu"
-        app:layout_constraintTop_toBottomOf="@+id/button_aufgaben" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
