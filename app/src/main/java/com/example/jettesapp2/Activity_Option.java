@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -77,17 +78,32 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         adapter = new MainAdapter(Activity_Option.this, dataList);
         //EXPERIMENTELLER BEREICH
 
+
+    // PROBLEM BEI linearLayoutManager IN fragment_fragen CLASSE
+    // BESTEHT WAHRSCHEINLICH DARIN, DASS LINEAR LAYOUT MEHRFACH AUFGERUFEN WIRD DURCH NEW
+
+
+
+        //EXPERIMENTELLER BEREICH
+        //new fragment_fragen().setLinearLayoutManager(linearLayoutManager);
+        fragment_fragen FragmentFragen = new fragment_fragen();
+        //FragmentFragen.setLinearLayoutManager(linearLayoutManager);
+        FragmentFragen.setAdapter(adapter);
+        FragmentFragen.setContext(this);
+        //EXPERIMENTELLER BEREICH
+
         neueFragen = new ArrayList<String>();
 
-        replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
-        //replaceFragment(fragmentFragen = new fragment_fragen((ArrayList<String>) neueFragen));
+       // replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
+        replaceFragment(new fragment_fragen());
 
         but_fragen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
-
+                //replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
+                //replaceFragment(new fragment_fragen((ArrayList<String>) neueFragen, linearLayoutManager, adapter));
+                replaceFragment(new fragment_fragen());
             }
         });
 
@@ -241,5 +257,4 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
         }
 
     }
-
 }
