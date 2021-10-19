@@ -22,6 +22,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private Activity context;
     private RoomDB database;
 
+    //EXPERIMENTELLER BEREICH
+    private RoomDBAufgaben databaseAufgaben;
+    private List<MainDataAufgaben> dataListAufgaben;
+    //EXPERIMENTELLER BEREICH
+
     public MainAdapter(Activity context, List<MainData> dataList){
         this.context = context;
         this.dataList = dataList;

@@ -4,14 +4,16 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Ignore;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 
 import java.util.List;
 
 @Dao
 public interface MainDao {
-    @Insert(onConflict = REPLACE)
+    @Insert
     void insert(MainData mainData);
 
     @Delete
@@ -23,7 +25,11 @@ public interface MainDao {
     @Query("UPDATE table_name SET text = :sText WHERE ID = :sID")
     void update(int sID, String sText);
 
-    @Query("SELECT * FROM table_name")
+  //  @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+    @Query("SELECT text, ID FROM table_name")
     List<MainData> getAll();
+
+   // @Query("SELECT aufgaben, ID FROM table_name")
+   // List<MainData> getAllAufgaben();
 
 }

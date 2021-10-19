@@ -83,13 +83,14 @@ public class Activity_Option extends AppCompatActivity implements MyRecyclerView
     // BESTEHT WAHRSCHEINLICH DARIN, DASS LINEAR LAYOUT MEHRFACH AUFGERUFEN WIRD DURCH NEW
 
 
-
-        //EXPERIMENTELLER BEREICH
-        //new fragment_fragen().setLinearLayoutManager(linearLayoutManager);
         fragment_fragen FragmentFragen = new fragment_fragen();
-        //FragmentFragen.setLinearLayoutManager(linearLayoutManager);
         FragmentFragen.setAdapter(adapter);
         FragmentFragen.setContext(this);
+
+        //EXPERIMENTELLER BEREICH
+        fragment_aufgaben FragmentAufgaben = new fragment_aufgaben();
+        FragmentAufgaben.setAdapter(adapter);
+        FragmentAufgaben.setContext(this);
         //EXPERIMENTELLER BEREICH
 
         neueFragen = new ArrayList<String>();
